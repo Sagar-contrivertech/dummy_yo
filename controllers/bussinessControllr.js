@@ -21,7 +21,7 @@ AWS.config.credentials = {
 
 AWS.config.region = "ap-south-1"
 
-const s3 = new AWS.S3()
+const s3 = new AWS.S3({apiVersion: '2006-03-01'})
 
 exports.addbussiness = catchAsyncErrors(async (req, res) => {
     try {
@@ -69,16 +69,16 @@ exports.addbussiness = catchAsyncErrors(async (req, res) => {
         for (let i = 0; i < fileNamevar.length; i++) {
 
             if (Object.keys(fileNamevar[i])[0] === "logo") {
-                fileContent = fs.readFileSync(fileNamevar[i].logo);
+                fileContent = fs.createReadStream(fileNamevar[i].logo);
                 FileNameSplit = fileNamevar[i].logo.split("/")
             } else if (Object.keys(fileNamevar[i])[0] === "ownerImage") {
-                fileContent = fs.readFileSync(fileNamevar[i].ownerImage);
+                fileContent = fs.createReadStream(fileNamevar[i].ownerImage);
                 FileNameSplit = fileNamevar[i].ownerImage.split("/")
             } else if (Object.keys(fileNamevar[i])[0] === "bannerImage") {
-                fileContent = fs.readFileSync(fileNamevar[i].bannerImage);
+                fileContent = fs.createReadStream(fileNamevar[i].bannerImage);
                 FileNameSplit = fileNamevar[i].bannerImage.split("/")
             } else if (Object.keys(fileNamevar[i])[0] === "idproof") {
-                fileContent = fs.readFileSync(fileNamevar[i].idproof);
+                fileContent = fs.createReadStream(fileNamevar[i].idproof);
                 FileNameSplit = fileNamevar[i].idproof.split("/")
             }
         }
