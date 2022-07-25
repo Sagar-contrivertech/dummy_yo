@@ -59,15 +59,10 @@ exports.addbussiness = catchAsyncErrors(async (req, res) => {
         }
 
         let imageData = []
-        if (typeof req.body.Images === 'string') {
-            imageData.push(req.body.images)
-        } else {
-            imageData = req.body.Images
-        }
         let fileContent
         let FileNameSplit
         const newupdateobject = {}
-        const fileNamevar = imageData;
+        const fileNamevar = req.body.Images;
         // console.log(fileNamevar, "filenamevar")
 
 
@@ -92,8 +87,9 @@ exports.addbussiness = catchAsyncErrors(async (req, res) => {
             Bucket: BUCKET_NAME,
             Key: FileNameSplit[FileNameSplit.length - 1], // File name you want to save as in S3
             Body: fileContent,
-            ContentType: 'image/jpeg'
+            ContentType: 'multipart/form-data'
         };
+        console.log(params)
         // Uploading files to the bucket
 
         s3.upload(params, async function (err, data) {
