@@ -59,10 +59,15 @@ exports.addbussiness = catchAsyncErrors(async (req, res) => {
         }
 
         let imageData = []
+        if (typeof req.body.Images === 'string') {
+            imageData.push(req.body.images)
+        } else {
+            imageData = req.body.Images
+        }
         let fileContent
         let FileNameSplit
         const newupdateobject = {}
-        const fileNamevar = req.body.Images;
+        const fileNamevar = imageData;
         // console.log(fileNamevar, "filenamevar")
 
 
