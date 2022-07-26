@@ -87,6 +87,7 @@ exports.addbussiness = catchAsyncErrors(async (req, res) => {
             Bucket: BUCKET_NAME,
             Key: FileNameSplit[FileNameSplit.length - 1], // File name you want to save as in S3
             Body: fileContent,
+            ContentEncoding: 'base64',
             ContentType: 'multipart/form-data'
         };
         console.log(params)
