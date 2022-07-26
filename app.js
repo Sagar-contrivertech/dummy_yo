@@ -10,6 +10,7 @@ const path = require('path')
 
 app.use(express.json());
 app.use(morgan('dev'))
+app.use(express.static("uploadfile"))
 port = config.port || 80
 const fileUpload = require('express-fileupload')
 app.use(express.json({ limit: "50mb" }));
