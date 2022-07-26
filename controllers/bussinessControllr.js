@@ -62,7 +62,7 @@ exports.addbussiness = catchAsyncErrors(async (req, res) => {
         let fileContent
         let FileNameSplit
         const newupdateobject = {}
-        const fileNamevar = req.file.Images;
+        const fileNamevar = req.file;
         console.log(fileNamevar, "filenamevar")
 
 
