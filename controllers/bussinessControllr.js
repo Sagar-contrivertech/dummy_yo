@@ -150,6 +150,7 @@ exports.addbussiness = catchAsyncErrors(async (req, res) => {
             bankAccountHolderName: req.body.bankAccountHolderName,
             bankCode: req.body.bankCode,
             currentAddress: req.body.currentAddress,
+            isactive:req.body.isactive,
 
             // images
             bussinessLogo: bussinessLogo,

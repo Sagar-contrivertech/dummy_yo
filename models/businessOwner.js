@@ -101,7 +101,11 @@ const BusinessOwnerSchema = new mongoose.Schema({
     },
     ownerImage : {
         type : String
-    }
+    },
+    isactive: {
+        type: Boolean,
+        default: true
+    },
 })
 
 module.exports = mongoose.model('BusinessOwner', BusinessOwnerSchema)

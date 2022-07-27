@@ -27,6 +27,7 @@ exports.registeruser = catchAsyncErrors(async (req, res) => {
             profileImage,
             devices,
             userType,
+            isactive
         } = req.body;
 
         const finduser = await user.findOne({ email: email });
@@ -51,6 +52,7 @@ exports.registeruser = catchAsyncErrors(async (req, res) => {
             profileImage,
             devices,
             userType,
+            isactive
         });
         if (!createuser) {
             res.status(400).json({
