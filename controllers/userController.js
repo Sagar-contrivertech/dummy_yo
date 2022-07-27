@@ -111,6 +111,16 @@ exports.loginUser = catchAsyncErrors(async (req, res) => {
             });
             return
         }
+
+        // if user is insactive then dont login
+        if(finduser[0].isActive === false){
+            res.status(400).json({
+                success : false,
+                message : "User Is Inactive So You Cannot Login"
+            })
+            return 
+        }
+
         let passwordData
         let data1
         finduser && finduser.map((i) => {
