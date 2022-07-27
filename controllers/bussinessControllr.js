@@ -63,16 +63,16 @@ exports.addbussiness = catchAsyncErrors(async (req, res) => {
                 filekey: 'ownerImage'
             }
         ]
-        let FileNameSplit = [
-            {
-                "bussinessLogo": req.files.bussinessLogo[0].originalname,
-                "bussinessImages": req.files.bussinessImages[0].originalname,
-                "bannerImage": req.files.bannerImage[0].originalname,
-                'owneridproofurl': req.files.owneridproofurl[0].originalname,
-                'ownerImage': req.files.ownerImage[0].originalname,
-            }
-        ]
-        console.log(FileNameSplit, fileObject)
+        // let FileNameSplit = [
+        //     {
+        //         "bussinessLogo": req.files.bussinessLogo[0].originalname,
+        //         "bussinessImages": req.files.bussinessImages[0].originalname,
+        //         "bannerImage": req.files.bannerImage[0].originalname,
+        //         'owneridproofurl': req.files.owneridproofurl[0].originalname,
+        //         'ownerImage': req.files.ownerImage[0].originalname,
+        //     }
+        // ]
+        // console.log(FileNameSplit, fileObject)
 
 
 
@@ -244,6 +244,7 @@ exports.getBussinessById = catchAsyncErrors(async (req, res) => {
 
 
 async function uploadMultipleFiles(fileObject) {
+    console.log(fileObject , "fileobject")
     const deferred = q.defer();
     let s3response = []
     try {
@@ -270,6 +271,7 @@ async function uploadMultipleFiles(fileObject) {
         console.log(err)
     }
     deferred.resolve(s3response)
+    console.log(deferred , "deferred")
     return deferred.promise
 
 }
