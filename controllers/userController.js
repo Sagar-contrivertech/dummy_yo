@@ -29,8 +29,8 @@ exports.registeruser = catchAsyncErrors(async (req, res) => {
             userType,
         } = req.body;
 
-        const finduser = await user.findOne({ email : email});
-        const finduserphone = await user.findOne({ phone : phone})
+        const finduser = await user.findOne({ email: email });
+        const finduserphone = await user.findOne({ phone: phone })
         // console.log(finduserphone , "finduserphone");
 
         if (finduser || finduserphone) {
@@ -96,7 +96,7 @@ exports.loginUser = catchAsyncErrors(async (req, res) => {
             }
             ]
         })
-        console.log(finduser , "finduser")
+        console.log(finduser, "finduser")
         if (!role) {
             res.status(400).json({
                 success: false,
@@ -118,9 +118,9 @@ exports.loginUser = catchAsyncErrors(async (req, res) => {
             data1 = i
             console.log(i.password)
         })
-        console.log(data1 , "data1")
+        console.log(data1, "data1")
         const token = data1.getJwtToken()
-        console.log(token , "token")
+        console.log(token, "token")
 
         if (finduser) {
             let ismatch = await bcrypt.compare(password, passwordData)
@@ -156,9 +156,9 @@ exports.loginUser = catchAsyncErrors(async (req, res) => {
                 }
                 let data = []
                 // data.push(data1,token)
-                console.log(";hjjj",data1)
+                console.log(";hjjj", data1)
                 data1.token = token
-                console.log(data1 , "data1")
+                console.log(data1, "data1")
                 const token1 = Object.assign(data1, { token })
                 console.log(token1, 'lll')
                 if (token1) {
@@ -357,7 +357,7 @@ exports.forgetPassword = catchAsyncErrors(async (req, res, next) => {
                         data = verification
                         if (data) {
                             res.status(200).json({
-                                sucess: true,
+                                success: true,
                                 message: "otp send successfully",
                                 data: data
                             })
@@ -365,7 +365,7 @@ exports.forgetPassword = catchAsyncErrors(async (req, res, next) => {
                         }
                         if (!data) {
                             res.status(400).json({
-                                sucess: false,
+                                success: false,
                                 message: "otp send cannot send !",
                             })
                         }
@@ -402,7 +402,7 @@ exports.verfiyOtp = catchAsyncErrors(async (req, res, next) => {
                 console.log(verification_check)
                 if (data.valid === true) {
                     res.status(200).json({
-                        sucess: true,
+                        success: true,
                         message: "otp verfied",
                         data: data
                     })
@@ -410,11 +410,13 @@ exports.verfiyOtp = catchAsyncErrors(async (req, res, next) => {
                 }
                 if (!data) {
                     res.status(400).json({
-                        sucess: false,
+                        success: false,
                         message: "otp send cannot send !",
                     })
                 }
-            });
+            }).catch((err) => {
+                console.log(err)
+            })
     } catch (error) {
         console.log(error);
         res.status(500).json({
@@ -429,10 +431,10 @@ exports.verfiyOtp = catchAsyncErrors(async (req, res, next) => {
 
 exports.internalservices = catchAsyncErrors(async (req, res) => {
     try {
-        console.log("finduser id " , req.params.id)
+        console.log("finduser id ", req.params.id)
 
         const findusers = await user.findById(req.params.id)
-        console.log("finduser " , findusers)
+        console.log("finduser ", findusers)
         if (!findusers) {
             res.status(400).json({
                 success: false,
@@ -458,8 +460,8 @@ exports.internalservices = catchAsyncErrors(async (req, res) => {
 })
 
 exports.resetPassword = async (req, res) => {
-    try{
-        const { phone , email , password , cpassword} = req.body;
+    try {
+        const { phone, email, password, cpassword } = req.body;
 
         // if(!phone || !email){
         //     res.status(400).json({
@@ -471,16 +473,16 @@ exports.resetPassword = async (req, res) => {
 
         let bcryptpassword
 
-        if(password !== cpassword){
+        if (password !== cpassword) {
             res.status(400).json({
                 success: false,
                 message: "Password And Cpassword Is Not Matching",
             });
             return
-        }else {
+        } else {
             const salt = await bcrypt.genSalt(10)
-            bcryptpassword = await bcrypt.hash(password , salt)
-            
+            bcryptpassword = await bcrypt.hash(password, salt)
+
             const finduser = await user.find({
                 $or: [{
                     email: email
@@ -491,13 +493,13 @@ exports.resetPassword = async (req, res) => {
                 ]
             })
 
-            if(finduser){
-                console.log(finduser , "finduser")
-                const updateuser = await user.findByIdAndUpdate(finduser[0]._id , {
-                    password : bcryptpassword
-                } , {new : true})
+            if (finduser) {
+                console.log(finduser, "finduser")
+                const updateuser = await user.findByIdAndUpdate(finduser[0]._id, {
+                    password: bcryptpassword
+                }, { new: true })
 
-                if(!updateuser){
+                if (!updateuser) {
 
                     res.status(400).json({
                         success: false,
@@ -506,13 +508,13 @@ exports.resetPassword = async (req, res) => {
                     return
                 }
 
-                if(updateuser){
+                if (updateuser) {
 
                     // console.log(finduser , "number user")
                     res.status(200).json({
                         success: true,
                         message: "New Password Is Updated",
-                        data : updateuser
+                        data: updateuser
                     });
                     return
                 }
@@ -524,7 +526,7 @@ exports.resetPassword = async (req, res) => {
 
 
 
-    }catch(error) {
+    } catch (error) {
         console.log(error);
         res.status(500).json({
             success: false,
