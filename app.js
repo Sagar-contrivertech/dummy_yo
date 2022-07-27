@@ -2,18 +2,17 @@ const express = require("express");
 const app = express();
 const morgan = require('morgan')
 const config = require("./config/config");
+
 require('./database/db')
 
 const cors = require('cors');
 app.use(cors());
-const path = require('path')
 
 app.use(express.json());
 app.use(morgan('dev'))
 port = config.port || 80
-const fileUpload = require('express-fileupload')
-app.use(express.json({ limit: "50mb" }));
-app.use(express.urlencoded({ limit: "50mb", extended: true }))
+// var multer = require('multer');
+
 
 const userRoutes = require('./routes/userRoutes')
 const cosumerRoutes = require('./routes/cosumerRoutes')
@@ -31,7 +30,7 @@ app.use('/api/v1', bussinesRoutes)
 
 app.get('/app', (req, res) => {
     return res.status(200).send({ "message": "App Response from server1!" });
-  });
+});
 app.listen(port, () => {
     console.table([
         {
