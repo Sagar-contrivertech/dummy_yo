@@ -12,7 +12,7 @@ router.get('/get/user', isAuthenticated, userController.getUsers)
 
 router.get('/get/user/:id', isAuthenticated, userController.getUserById)
 
-router.put('/verify/auth/reserPassword', userController.resetPassword)
+router.put('/verify/auth/resetPassword', userController.resetPassword)
 
 // router.get('/me', isAuthenticated, userController.profile)
 
