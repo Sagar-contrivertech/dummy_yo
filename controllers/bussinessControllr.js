@@ -247,14 +247,21 @@ exports.getBussinessById = catchAsyncErrors(async (req, res) => {
 
 exports.oneImage = catchAsyncErrors(async (req, res) => {
     try {
-        console.log(req.file)
+        // 
+        function base64_encode(file) {
+            return "data:image/gif;base64," + fs.readFile(file, 'base64');
+        }
+
+        const data = base64_encode(req.body.bussinessLogo)
+        // console.log(req.body,data)
         let fileObject = [
             {
-                key: req.files.bussinessLogo[0].originalname,
-                value: req.files.bussinessLogo[0].buffer,
+                key: "bussinessLogo",
+                value: data,
                 filekey: 'bussinessLogo'
             }
         ]
+        console.log(fileObject,'258')
         let newupdateobject = await uploadMultipleFiles(fileObject).then(data => {
             console.log(data, '79')
             return data

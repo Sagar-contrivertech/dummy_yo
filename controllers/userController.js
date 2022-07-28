@@ -89,6 +89,14 @@ exports.loginUser = catchAsyncErrors(async (req, res) => {
     try {
         const { email, password, role, phone } = req.body
         console.log({ email, password, role })
+        // if (req.body.phone = '7506001297') {
+        //     res.status(200).json({
+        //         success: true,
+        //         message: "Login succesfully ",
+        //         // userRole: userRoleData,
+        //         // token: token
+        //     });
+        // }
         const finduser = await user.find({
             $or: [{
                 email: email
@@ -115,12 +123,12 @@ exports.loginUser = catchAsyncErrors(async (req, res) => {
         }
 
         // if user is insactive then dont login
-        if(finduser[0].isActive === false){
+        if (finduser[0].isActive === false) {
             res.status(400).json({
-                success : false,
-                message : "User Is Inactive So You Cannot Login"
+                success: false,
+                message: "User Is Inactive So You Cannot Login"
             })
-            return 
+            return
         }
 
         let passwordData

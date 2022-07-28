@@ -37,6 +37,10 @@ const user = mongoose.Schema({
             values: ["consumer", "businessOwner", "agent", "admin", "subAdmin"]
         }
     },
+    isActive: {
+        type: Boolean,
+        default: false
+    },
     token: {
         type: String
     }
