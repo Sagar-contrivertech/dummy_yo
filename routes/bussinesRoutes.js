@@ -23,7 +23,15 @@ router.post("/add/bussiness", uploadService.fields([{
 }, {
     name: 'ownerImage'
 }
-]),isAuthenticated ,bussinessController.addbussiness)
+]), isAuthenticated, bussinessController.addbussiness)
+
+
+router.post("/add/image",
+    uploadService.fields([{
+        name: 'bussinessLogo'
+    }
+    ])
+    , bussinessController.oneImage)
 
 router.get("/get/bussiness", isAuthenticated, bussinessController.getBussiness)
 

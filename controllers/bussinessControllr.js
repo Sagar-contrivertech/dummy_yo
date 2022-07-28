@@ -23,6 +23,7 @@ const s3 = new AWS.S3()
 exports.addbussiness = catchAsyncErrors(async (req, res) => {
     try {
 
+        console.log(req.file)
         const finduser = await BusinessOwner.findOne({ name: req.body.name });
 
         if (finduser) {
@@ -150,7 +151,7 @@ exports.addbussiness = catchAsyncErrors(async (req, res) => {
             bankAccountHolderName: req.body.bankAccountHolderName,
             bankCode: req.body.bankCode,
             currentAddress: req.body.currentAddress,
-            isactive:req.body.isactive,
+            isactive: req.body.isactive,
 
             // images
             bussinessLogo: bussinessLogo,
@@ -243,8 +244,73 @@ exports.getBussinessById = catchAsyncErrors(async (req, res) => {
 })
 
 
+
+exports.oneImage = catchAsyncErrors(async (req, res) => {
+    try {
+        console.log(req.file)
+        let fileObject = [
+            {
+                key: req.files.bussinessLogo[0].originalname,
+                value: req.files.bussinessLogo[0].buffer,
+                filekey: 'bussinessLogo'
+            }
+        ]
+        let newupdateobject = await uploadMultipleFiles(fileObject).then(data => {
+            console.log(data, '79')
+            return data
+        }).catch((err) => {
+            console.log(err)
+        })
+        console.log(newupdateobject, '77')
+
+        let bussinessLogo
+
+        newupdateobject && newupdateobject.map(m => {
+
+            if (m.key === 'bussinessLogo') {
+                console.log(m.Location, ';bussinessLogo')
+                bussinessLogo = m.Location
+                return m.Location
+            }
+        })
+
+        console.log(bussinessLogo, '87',)
+        // clear
+
+        const createOwner = await BusinessOwner.create({
+
+            name: req.body.name,
+            bussinessLogo: bussinessLogo,
+        })
+        if (createOwner) {
+            // console.log(imageData, createOwner._id)
+            await createOwner.save()
+            res.status(200).json({
+                success: true,
+                message: 'create user',
+                data: createOwner
+            })
+            if (!createOwner) {
+                res.status(400).json({
+                    success: false,
+                    message: 'cannot create ',
+                })
+                return
+            }
+
+        }
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            success: false,
+            message: "validation failled in catch",
+        });
+    }
+})
+
 async function uploadMultipleFiles(fileObject) {
-    console.log(fileObject , "fileobject")
+    console.log(fileObject, "fileobject")
     const deferred = q.defer();
     let s3response = []
     try {
@@ -271,7 +337,7 @@ async function uploadMultipleFiles(fileObject) {
         console.log(err)
     }
     deferred.resolve(s3response)
-    console.log(deferred , "deferred")
+    console.log(deferred, "deferred")
     return deferred.promise
 
 }
