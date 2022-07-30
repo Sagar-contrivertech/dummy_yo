@@ -129,7 +129,7 @@ exports.addbussiness = catchAsyncErrors(async (req, res) => {
             name: req.body.name,
             ownerName: req.body.ownerName,
             ownerEmail: req.body.ownerEmail,
-            dateOfBirth: req.body.dateOfBirth,
+            // dateOfBirth: req.body.dateOfBirth,
             storeName: req.body.storeName,
             bussinessName: req.body.bussinessName,
             lName: req.body.lName,
@@ -217,8 +217,9 @@ exports.getBussiness = catchAsyncErrors(async (req, res) => {
 
 exports.getBussinessById = catchAsyncErrors(async (req, res) => {
     try {
-        const findusers = await BusinessOwner.findById(req.params.id).populate("name")
-
+        console.log(req.params.id)
+        const findusers = await BusinessOwner.find({name: req.params.id})
+        console.log(findusers)
         if (!findusers) {
             res.status(400).json({
                 success: false,

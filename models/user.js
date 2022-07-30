@@ -43,7 +43,10 @@ const user = mongoose.Schema({
     },
     token: {
         type: String
-    }
+    },
+    dateOfBirth : {
+        type : String
+    },
 }, { timestamps: true })
 
 

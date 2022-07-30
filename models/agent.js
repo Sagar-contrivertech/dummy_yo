@@ -9,12 +9,12 @@ const agentSchema = new mongoose.Schema({
     income: {
         type: String
     },
-    dl_image: {
-        type: String
-    },
-    id_image: {
-        type: String
-    },
+    // dl_image: {
+    //     type: String
+    // },
+    // id_image: {
+    //     type: String
+    // },
     address: {
         type: Array
     },

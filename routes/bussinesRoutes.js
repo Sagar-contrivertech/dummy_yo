@@ -35,6 +35,6 @@ router.post("/add/image",
 
 router.get("/get/bussiness", isAuthenticated, bussinessController.getBussiness)
 
-router.get("/get/bussiness/:id", isAuthenticated, bussinessController.getBussinessById)
+router.get("/get/bussiness/:id", bussinessController.getBussinessById)
 
 module.exports = router

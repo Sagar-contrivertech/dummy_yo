@@ -161,7 +161,7 @@ exports.getAgent = catchAsyncErrors(async (req, res) => {
 
 exports.getAgentById = catchAsyncErrors(async (req, res) => {
     try {
-        const findusers = await agent.findById(req.params.id)
+        const findusers = await agent.find({agentUrl:req.params.id})
         console.log(findusers)
         if (!findusers) {
             res.status(400).json({

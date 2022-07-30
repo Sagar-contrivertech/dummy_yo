@@ -27,6 +27,7 @@ exports.registeruser = catchAsyncErrors(async (req, res) => {
             profileImage,
             devices,
             userType,
+            dateOfBirth,
         } = req.body;
 
         const finduser = await user.findOne({ email: email });
@@ -51,7 +52,8 @@ exports.registeruser = catchAsyncErrors(async (req, res) => {
             profileImage,
             devices,
             userType,
-            isactive: true
+            isactive: false,
+            dateOfBirth,
         });
         if (!createuser) {
             res.status(400).json({
@@ -556,7 +558,7 @@ exports.resetPassword = async (req, res) => {
 
 exports.profile = catchAsyncErrors(async (req, res, next) => {
     try {
-        console.log(req.user , "profile me id")
+        console.log(req.user, "profile me id")
         const users = await user.findById(req.user._id)
         console.log(users._id)
         const findConsumer = await consumer.find({ name: users._id }).populate('name')
@@ -571,6 +573,34 @@ exports.profile = catchAsyncErrors(async (req, res, next) => {
         res.status(500).json({
             success: false,
             message: "token invalid ! something went wrong"
+        })
+    }
+})
+
+exports.updateuserData = catchAsyncErrors(async (req, res, next) => {
+    try {
+        const data = req.body
+        const updateUserData = await user.findByIdAndUpdate( req.params.id , data, {
+            new: true
+        })
+        if (!updateUserData) {
+            return res.status(400).json({
+                message: "user data cannot find",
+                success: false
+            })
+        }
+        if (updateUserData) {
+            return res.status(200).json({
+                messagae: "data found",
+                success: true,
+                data: updateUserData
+            })
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            messagae: "internal server error",
+            success: false
         })
     }
 })

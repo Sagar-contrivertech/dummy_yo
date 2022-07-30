@@ -104,7 +104,7 @@ const BusinessOwnerSchema = new mongoose.Schema({
     },
     isactive: {
         type: Boolean,
-        default: true
+        default: false
     },
 })
 

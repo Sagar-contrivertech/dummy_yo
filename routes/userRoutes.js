@@ -14,6 +14,7 @@ router.get('/get/user/:id', isAuthenticated, userController.getUserById)
 
 router.put('/verify/auth/resetPassword', userController.resetPassword)
 
+router.put('/update/user/:id', isAuthenticated, userController.updateuserData)
 // router.get('/me', isAuthenticated, userController.profile)
 
 // internal services
