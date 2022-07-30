@@ -39,9 +39,11 @@ const agentSchema = new mongoose.Schema({
     vehicle_reg: {
         type: String
     },
+    // images
     vehicleLicenceImage : {
         type : String
     },
+    // images
     latitude: {
         type: String
     },

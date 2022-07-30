@@ -27,7 +27,6 @@ exports.registeruser = catchAsyncErrors(async (req, res) => {
             profileImage,
             devices,
             userType,
-            isactive
         } = req.body;
 
         const finduser = await user.findOne({ email: email });
@@ -52,7 +51,7 @@ exports.registeruser = catchAsyncErrors(async (req, res) => {
             profileImage,
             devices,
             userType,
-            isactive
+            isactive: true
         });
         if (!createuser) {
             res.status(400).json({
@@ -555,23 +554,23 @@ exports.resetPassword = async (req, res) => {
     }
 }
 
-// exports.profile = catchAsyncErrors(async (req, res, next) => {
-//     try {
-//         console.log(req.user , "profile me id")
-//         const users = await user.findById(req.user._id)
-//         console.log(users._id)
-//         const findConsumer = await consumer.find({ name: users._id }).populate('name')
-//         // console.log(findConsumer)
-//         res.status(200).json({
-//             success: true,
-//             message: "user fetch sucessfully",
-//             data: findConsumer,
-//         })
-//     } catch (err) {
-//         console.log(err)
-//         res.status(500).json({
-//             success: false,
-//             message: "token invalid ! something went wrong"
-//         })
-//     }
-// })
+exports.profile = catchAsyncErrors(async (req, res, next) => {
+    try {
+        console.log(req.user , "profile me id")
+        const users = await user.findById(req.user._id)
+        console.log(users._id)
+        const findConsumer = await consumer.find({ name: users._id }).populate('name')
+        // console.log(findConsumer)
+        res.status(200).json({
+            success: true,
+            message: "user fetch sucessfully",
+            data: findConsumer,
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            success: false,
+            message: "token invalid ! something went wrong"
+        })
+    }
+})
